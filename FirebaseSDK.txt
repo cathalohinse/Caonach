@@ -1,0 +1,20 @@
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCymJEM9PSwmkvylq98Y_vkTkhz88mwrWw",
+    authDomain: "norriehenchymonitor-c7c96.firebaseapp.com",
+    databaseURL: "https://norriehenchymonitor-c7c96-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "norriehenchymonitor-c7c96",
+    storageBucket: "norriehenchymonitor-c7c96.appspot.com",
+    messagingSenderId: "201298770948",
+    appId: "1:201298770948:web:defaccc1f704a642340951"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
