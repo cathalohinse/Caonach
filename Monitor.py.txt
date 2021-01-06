@@ -1,0 +1,50 @@
+#!/usr/bin/python3
+
+from urllib.request import urlopen
+import urllib.request as urllib2
+import  json
+import  time
+from sense_hat import SenseHat
+import datetime
+import storeFileFB
+import firebase_admin
+from firebase_admin import credentials, firestore, storage, db
+
+WRITE_API_KEY='NPTW37S68N59WA2O'
+
+baseURL='https://api.thingspeak.com/update?api_key=%s' % WRITE_API_KEY
+
+sense = SenseHat()
+reading = 1
+
+def writeData(temp,hum,quotient):
+    # Sending the data to thingspeak in the query string
+    conn = urllib2.urlopen(baseURL + '&field1=%s&field2=%s&field3=%s' % (temp, hum, quotient))
+    print(conn.read(), ' - reading sent to Thingspeak for further processing')
+    # Closing the connection
+    conn.close()
+
+while True:
+    temp=round(sense.get_temperature(),2)
+    hum=round(sense.get_humidity(),2)
+    quotient=(temp/hum)*100
+
+    temp_json=json.dumps({"temperature":temp, "humidity":hum, "timestamp":time.time()})
+    fileLoc = f'/home/pi/assignment2/monitor/reading{reading}.json' # set location of sensor file and current time
+    currentTime = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
+    if quotient >= 63.4:
+        heatingTime = reading*0.25
+        print(f'reading {reading} taken at {currentTime} and logged in firebase ({reading}.json). Heating has now been running for', heatingTime, ' minutes' ) # print frame number to conso$
+        file = open(fileLoc, "w")
+        file.write("temp_json = " + repr(temp_json) + "\n")
+        file.close()
+        file1 = open("pubCold.json", "a")
+        file1.write(temp_json + '\n')
+        file1.close()
+        storeFileFB.store_file(fileLoc)
+        storeFileFB.push_db(temp_json, currentTime)
+        reading += 1
+
+    writeData(temp,hum,quotient)
+    time.sleep(15)
