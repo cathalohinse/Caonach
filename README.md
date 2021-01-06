@@ -1,21 +1,25 @@
-# Caonach
-Computer Systems &amp; Networks Assignment 2
+# hello-sqlite
 
-This is a home heating solution of sorts, whose main focus is on the maintanance of derilict/vacant buildings, by controlling their internal temperature & humidity.
-A Sensehat mounted RPI, measures the temperature & humidity of the room in which it is located. It then performs a calculation on this data in python. The Calculation is carried out based on a table in an attached excel file ('Device Trigger Calculation'). The intention of this IoT app is to power the smart plug in conditions of high humidity (>55%), and low temperature (<20°C). I used this table to determine that by using the quotient of the Temperature (dividend) and Humidity (divisor) as a setpoint, the smart plug could be configured to only switch on when temperature and humidity combinations are observed that return a quotient above this setpoint, as this would mean that most instances of temperature and humidity above and below the respective temperature & humidity setpoints (55% and 20°C respectively - as indicated above), would trigger the device. Please refer to the tables in the ‘Device Trigger Calculation’ excel file for a better explanation. If I had more time, I would have developed a more complex formula that would completely omit any temperature or humidity values outside of the specified limits. Or alternatively, I was considering setting the table up as an array in an SQL database that could be called upon to help determine what values to trigger the device. The one positive from this system, is its dynamic nature – the temperature and humidity can be inserted into the table to return the desired quotient which in turn is written into Thingspeak.
-Thingspeak is able to use this data to control a smart plug that the storage heater/air conditioner is controlled by, via http and IFTTT. I have not been able to communicate directly via the Smart Plug’s API.
-I have set up a broadcast to an MQTT broker and a subscriber of same, but I figured that a more suitable solution would be for a Realtime database, that would only record the temperature and humidity (along with the timestamp) when the device is triggered to switch on. I had intended on performing calculations on this data using Mongodb aggregation, to return the amount of time that the device had been active (cost control for the home customer using this solution). However, I kept running into errors in my python code while configuring this, and the stop start nature of the rpi connection made it next to impossible to progress.
+A starter that has a database
 
-Summary:
--	Successfully implemented a temperature & humidity control system, based on real events.
--	Failed at data persistence in the desired manner.
+- This app uses sqlite but you can power your apps with [a number of other storage options](https://glitch.com/storage)
+- `sqlite.db` is created and put into the `.data` folder, a hidden directory whose contents aren’t copied when a project is remixed. You can see the contents of `.data` in the console under "Logs"
+- To save to the database, remix this app!
 
-Associated links:
-- https://www.youtube.com/watch?v=EbL4rYfTio8
-- https://www.youtube.com/watch?v=zWSEbet7TJ8
-- https://thingspeak.com/channels/1269751/private_show
-- https://thingspeak.com/apps/reacts/76310
-- https://thingspeak.com/apps/reacts/76326
-- https://thingspeak.com/apps/thinghttp/145390
-- https://thingspeak.com/apps/thinghttp/145436
+On the front-end,
 
+- Edit `views/index.html`,  `public/style.css`, and `public/client.js`
+- Drag in `assets`, like images or music, to add them to your project
+
+On the back-end,
+
+- Your app starts at `server.js`
+- Add frameworks and packages in `package.json`
+- Safely store app secrets in `.env` (nobody can see this but you and people you invite)
+
+Click `Show` in the header to see your app live. Updates to your code will instantly deploy.
+
+
+## Made by [Glitch](https://glitch.com/)
+
+\ ゜ o ゜)ノ
